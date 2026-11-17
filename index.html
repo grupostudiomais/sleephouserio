@@ -204,6 +204,21 @@ footer{background:var(--slate-deep);color:rgba(255,255,255,.7);padding:64px 0 34
 .wa:hover{transform:scale(1.08)}
 .wa svg{width:32px;height:32px;color:#fff}
 
+
+/* Pop-up campanha */
+.promo{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(15,20,24,.78);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.promo.show{opacity:1;visibility:visible}
+.promo-box{position:relative;width:min(440px,100%);max-height:calc(100svh - 40px);display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:#0B0B0B;box-shadow:0 40px 90px -20px rgba(0,0,0,.8),0 0 0 1px rgba(207,158,0,.35);transform:translateY(24px) scale(.97);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.promo.show .promo-box{transform:none}
+.promo-box a.pimg{display:block;min-height:0;flex:1 1 auto}
+.promo-box img{width:100%;height:100%;max-height:calc(100svh - 40px);object-fit:contain;background:#0B0B0B}
+.promo-cta{padding:16px;display:grid;gap:8px;background:#0B0B0B}
+.promo-cta .btn{justify-content:center;width:100%}
+.promo-cta button.skip{background:none;border:0;color:rgba(255,255,255,.6);font:inherit;font-size:.85rem;cursor:pointer;padding:4px}
+.promo-cta button.skip:hover{color:#fff}
+.promo-x{position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .2s}
+.promo-x:hover{background:rgba(0,0,0,.85)}
+
 /* Revelar ao rolar */
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
 .rv.in{opacity:1;transform:none}
@@ -440,6 +455,15 @@ footer{background:var(--slate-deep);color:rgba(255,255,255,.7);padding:64px 0 34
   </div>
 </footer>
 
+
+<!-- POP-UP CAMPANHA: Black dos Sonhos -->
+<div class="promo" id="promo" role="dialog" aria-modal="true" aria-label="Campanha Black dos Sonhos" aria-hidden="true">
+  <div class="promo-box">
+    <button class="promo-x" type="button" aria-label="Fechar">&times;</button>
+    <a class="pimg" href="https://wa.me/5521972668316?text=Ol%C3%A1%21%20Vi%20a%20campanha%20Black%20dos%20Sonhos%20no%20site%20e%20quero%20saber%20como%20concorrer%20%C3%A0s%20viagens." target="_blank" rel="noopener"><img src="img/black-dos-sonhos.jpg" alt="Black dos Sonhos Sleep House: concorra a 10 viagens internacionais" width="941" height="1260"></a>
+  </div>
+</div>
+
 <a class="wa" href="https://wa.me/5521972668316?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20consultor%20da%20Sleep%20House%20Barra." target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg><use href="#i-wa"/></svg></a>
 
 <script>
@@ -454,6 +478,21 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 (function(){
   document.getElementById('y').textContent=new Date().getFullYear();
+})();
+
+// Pop-up da campanha: aparece 1x por visita, depois de 1,5s
+(function(){
+  const p=document.getElementById('promo'); if(!p) return;
+  const KEY='promo-black-dos-sonhos';
+  let seen=false; try{seen=sessionStorage.getItem(KEY)==='1'}catch(e){}
+  if(seen) return;
+  const close=()=>{p.classList.remove('show');p.setAttribute('aria-hidden','true');document.body.style.overflow='';try{sessionStorage.setItem(KEY,'1')}catch(e){}};
+  const open=()=>{p.classList.add('show');p.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';p.querySelector('.promo-x').focus()};
+  p.querySelector('.promo-x').addEventListener('click',close);
+  p.querySelectorAll('.promo-box a').forEach(a=>a.addEventListener('click',close));
+  p.addEventListener('click',e=>{if(e.target===p)close()});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&p.classList.contains('show'))close()});
+  setTimeout(open,1500);
 })();
 </script>
 </body>
