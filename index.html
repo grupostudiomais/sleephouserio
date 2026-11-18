@@ -2,6 +2,13 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T8N9MT3M');</script>
+<!-- End Google Tag Manager -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sleep House Barra da Tijuca | Colchões Internacionais no Shopping Via Parque</title>
 <meta name="description" content="Colchões Stearns &amp; Foster, Tempur e Pikolin com garantia oficial. Venha deitar e testar na Sleep House do Shopping Via Parque, Barra da Tijuca – Rio de Janeiro.">
@@ -226,6 +233,10 @@ footer{background:var(--slate-deep);color:rgba(255,255,255,.7);padding:64px 0 34
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8N9MT3M"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- Ícones reutilizáveis -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -493,6 +504,24 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   p.addEventListener('click',e=>{if(e.target===p)close()});
   addEventListener('keydown',e=>{if(e.key==='Escape'&&p.classList.contains('show'))close()});
   setTimeout(open,1500);
+})();
+
+// Conversões: envia um evento ao Tag Manager em cada clique de WhatsApp, telefone e "Como chegar"
+(function(){
+  window.dataLayer=window.dataLayer||[];
+  const lojas={'5521972668316':'Via Parque','5521972295784':'Freeway Center','5521964255610':'CasaShopping'};
+  const local=a=>a.closest('#promo')?'popup_campanha':a.classList.contains('wa')?'botao_flutuante':a.closest('header')?'topo':a.closest('footer')?'rodape':(a.closest('section[id]')||{}).id||'pagina';
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href]'); if(!a) return;
+    const h=a.getAttribute('href'); let ev=null;
+    if(h.includes('wa.me/')) ev='whatsapp_click';
+    else if(h.startsWith('tel:')) ev='telefone_click';
+    else if(h.includes('google.com/maps')) ev='como_chegar_click';
+    if(!ev) return;
+    const num=(h.match(/55\d{10,11}/)||[''])[0];
+    const card=a.closest('.store'); const nomeCard=card?card.querySelector('h3').textContent.replace('Shopping ',''):null;
+    dataLayer.push({event:ev,loja:lojas[num]||nomeCard||'Via Parque',posicao:local(a)});
+  },true);
 })();
 </script>
 </body>
